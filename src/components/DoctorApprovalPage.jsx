@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom"; // Import useParams hook from react-router-dom
 
-const DoctorApprovalPage = ({ match }) => {
-  const { id } = match.params; // Destructure `id` from `match.params`
+const DoctorApprovalPage = () => {
+  const { id } = useParams(); // Use the useParams hook to access the route parameters
   const [formDetails, setFormDetails] = useState(null); // State to store form details
   const [loading, setLoading] = useState(true); // State for loading status
   const [approving, setApproving] = useState(false); // State for button disabling during approval
