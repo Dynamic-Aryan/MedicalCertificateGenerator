@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom"; // Import useParams hook from react-router-dom
+import { useParams } from "react-router-dom";
 
 const DoctorApprovalPage = () => {
-  const { id } = useParams(); // Use the useParams hook to access the route parameters
+  const { id } = useParams(); // Get the form ID from the URL
   const [formDetails, setFormDetails] = useState(null); // State to store form details
-  const [loading, setLoading] = useState(true); // State for loading status
-  const [approving, setApproving] = useState(false); // State for button disabling during approval
+  const [loading, setLoading] = useState(true); // Loading state
+  const [approving, setApproving] = useState(false); // Approving state for button disable
 
   useEffect(() => {
     const fetchFormDetails = async () => {
@@ -19,20 +19,20 @@ const DoctorApprovalPage = () => {
         console.error("Error fetching form details:", error);
         alert("Failed to fetch form details.");
       } finally {
-        setLoading(false); // Always stop loading
+        setLoading(false); // Stop loading
       }
     };
 
     fetchFormDetails();
-  }, [id]); // Use only `id` as a dependency
+  }, [id]); // Fetch form details when component mounts or `id` changes
 
   const handleApprove = async () => {
     try {
-      setApproving(true); // Disable button during the API call
+      setApproving(true); // Disable button during API call
       const response = await axios.put(
         `https://medicalcertificategenerationbackendnew.onrender.com/api/forms/approve/${id}`
-      ); // Approve the form
-      console.log('Approval response:', response.data); // Log the response
+      ); // Make a PUT request
+      console.log('Approval response:', response.data); // Log response
       alert("Form approved successfully!");
     } catch (error) {
       console.error("Error approving form:", error);
@@ -41,9 +41,10 @@ const DoctorApprovalPage = () => {
       }
       alert("Failed to approve the form.");
     } finally {
-      setApproving(false); // Re-enable button after the call
+      setApproving(false); // Re-enable button after API call
     }
   };
+  
 
   if (loading) {
     return <p>Loading...</p>; // Show loading indicator
