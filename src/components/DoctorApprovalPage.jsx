@@ -12,7 +12,7 @@ const DoctorApprovalPage = () => {
     const fetchFormDetails = async () => {
       try {
         const response = await axios.get(
-          `https://medicalcertificategenerationbackendnew.onrender.com/api/forms/${id}`
+          "https://medicalcertificategenerationbackendnew.onrender.com/api/forms/${id}"
         ); // Fetch form details from API
         setFormDetails(response.data); // Save data to state
       } catch (error) {
@@ -29,12 +29,16 @@ const DoctorApprovalPage = () => {
   const handleApprove = async () => {
     try {
       setApproving(true); // Disable button during the API call
-      await axios.put(
-        `https://medicalcertificategenerationbackendnew.onrender.com/api/forms/approve/${id}`
+      const response = await axios.put(
+        "https://medicalcertificategenerationbackendnew.onrender.com/api/forms/approve/${id}"
       ); // Approve the form
+      console.log('Approval response:', response.data); // Log the response
       alert("Form approved successfully!");
     } catch (error) {
       console.error("Error approving form:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data); // Log response data
+      }
       alert("Failed to approve the form.");
     } finally {
       setApproving(false); // Re-enable button after the call
@@ -52,18 +56,9 @@ const DoctorApprovalPage = () => {
   return (
     <div>
       <h2>Review Sick Leave Form</h2>
-      <p>
-        <strong>Name:</strong> {formDetails.fullName}
-      </p>
-      <p>
-        <strong>Email:</strong> {formDetails.email}
-      </p>
-      <p>
-        <strong>Symptoms:</strong>{" "}
-        {Array.isArray(formDetails.symptoms)
-          ? formDetails.symptoms.join(", ")
-          : "N/A"}
-      </p>
+      <p><strong>Name:</strong> {formDetails.fullName}</p>
+      <p><strong>Email:</strong> {formDetails.email}</p>
+      <p><strong>Symptoms:</strong> {Array.isArray(formDetails.symptoms) ? formDetails.symptoms.join(", ") : "N/A"}</p>
       {/* Add other form fields here */}
       <button onClick={handleApprove} disabled={approving}>
         {approving ? "Approving..." : "Approve Form"}
