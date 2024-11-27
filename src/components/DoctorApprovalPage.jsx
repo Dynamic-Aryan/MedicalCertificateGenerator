@@ -12,7 +12,7 @@ const DoctorApprovalPage = () => {
     const fetchFormDetails = async () => {
       try {
         const response = await axios.get(
-          "https://medicalcertificategenerationbackendnew.onrender.com/api/forms/${id}"
+          `https://medicalcertificategenerationbackendnew.onrender.com/api/forms/${id}`
         ); // Fetch form details from API
         setFormDetails(response.data); // Save data to state
       } catch (error) {
@@ -30,7 +30,7 @@ const DoctorApprovalPage = () => {
     try {
       setApproving(true); // Disable button during the API call
       const response = await axios.put(
-        "https://medicalcertificategenerationbackendnew.onrender.com/api/forms/approve/${id}"
+        `https://medicalcertificategenerationbackendnew.onrender.com/api/forms/approve/${id}`
       ); // Approve the form
       console.log('Approval response:', response.data); // Log the response
       alert("Form approved successfully!");
